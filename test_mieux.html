@@ -30,7 +30,6 @@
                     this.platforms.create(750, 230, 'ground');
 
                     this.player = this.physics.add.sprite(100, 450, 'perso');
-                    this.player.setBounce(0.2);
                     this.player.setCollideWorldBounds(true);
                     this.physics.add.collider(this.player, this.platforms);
                     this.anims.create({
@@ -83,11 +82,17 @@
                     }
                     else{ // sinon
                         this.player.setVelocityX(0); //vitesse nulle
+                        this.player.setVelocityY(0); //vitesse nulle
                         this.player.anims.play('turn'); //animation fait face caméra
                     }
-                    if (this.cursors.up.isDown && this.player.body.touching.down){
+                    if (this.cursors.up.isDown){
                     //si touche haut appuyée ET que le perso touche le sol
-                    this.player.setVelocityY(-590); //alors vitesse verticale négative
+                    this.player.setVelocityY(-240); //alors vitesse verticale négative
+                    //(on saute)
+                    }
+                    else if (this.cursors.down.isDown){
+                    //si touche haut appuyée ET que le perso touche le sol
+                    this.player.setVelocityY(240); //alors vitesse verticale négative
                     //(on saute)
                     }
                 }
@@ -140,7 +145,6 @@
                     this.platforms.create(750, 230, 'ground').setTint(0xff0000);
 
                     this.player = this.physics.add.sprite(100, 450, 'perso');
-                    this.player.setBounce(0.2);
                     this.player.setCollideWorldBounds(true);
                     this.physics.add.collider(this.player, this.platforms);
                     this.anims.create({
@@ -192,11 +196,17 @@
                     }
                     else{ // sinon
                         this.player.setVelocityX(0); //vitesse nulle
+                        this.player.setVelocityY(0); //vitesse nulle
                         this.player.anims.play('turn'); //animation fait face caméra
                     }
-                    if (this.cursors.up.isDown && this.player.body.touching.down){
+                    if (this.cursors.up.isDown){
                     //si touche haut appuyée ET que le perso touche le sol
-                    this.player.setVelocityY(-590); //alors vitesse verticale négative
+                    this.player.setVelocityY(-240); //alors vitesse verticale négative
+                    //(on saute)
+                    }
+                    else if (this.cursors.down.isDown){
+                    //si touche haut appuyée ET que le perso touche le sol
+                    this.player.setVelocityY(240); //alors vitesse verticale négative
                     //(on saute)
                     }
                 }
@@ -249,7 +259,6 @@
                     this.platforms.create(750, 230, 'ground').setTint(0xfD6C9E);
 
                     this.player = this.physics.add.sprite(100, 450, 'perso');
-                    this.player.setBounce(0.2);
                     this.player.setCollideWorldBounds(true);
                     this.physics.add.collider(this.player, this.platforms);
                     this.anims.create({
@@ -301,11 +310,17 @@
                     }
                     else{ // sinon
                         this.player.setVelocityX(0); //vitesse nulle
+                        this.player.setVelocityY(0); //vitesse nulle
                         this.player.anims.play('turn'); //animation fait face caméra
                     }
-                    if (this.cursors.up.isDown && this.player.body.touching.down){
+                    if (this.cursors.up.isDown){
                     //si touche haut appuyée ET que le perso touche le sol
-                    this.player.setVelocityY(-590); //alors vitesse verticale négative
+                    this.player.setVelocityY(-240); //alors vitesse verticale négative
+                    //(on saute)
+                    }
+                    else if (this.cursors.down.isDown){
+                    //si touche haut appuyée ET que le perso touche le sol
+                    this.player.setVelocityY(240); //alors vitesse verticale négative
                     //(on saute)
                     }
                 }
@@ -344,7 +359,6 @@
             physics: {
                 default: 'arcade',
                 arcade: {
-                gravity: { y: 950 },
                 debug: false
             }},
 
