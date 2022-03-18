@@ -83,7 +83,6 @@
                     }
                     else{ // sinon
                         this.player.setVelocityX(0); //vitesse nulle
-                        this.player.setVelocityY(0); //vitesse nulle
                         this.player.anims.play('turn'); //animation fait face caméra
                     }
                     if (this.clavier.Z.isDown){
@@ -95,6 +94,9 @@
                     //si touche haut appuyée ET que le perso touche le sol
                     this.player.setVelocityY(240); //alors vitesse verticale négative
                     //(on saute)
+                    }
+                    else{ // sinon
+                        this.player.setVelocityY(0); //vitesse nulle
                     }
                 }
                 collectStar(player, star){
@@ -198,7 +200,6 @@
                     }
                     else{ // sinon
                         this.player.setVelocityX(0); //vitesse nulle
-                        this.player.setVelocityY(0); //vitesse nulle
                         this.player.anims.play('turn'); //animation fait face caméra
                     }
                     if (this.clavier.Z.isDown){
@@ -210,6 +211,9 @@
                     //si touche haut appuyée ET que le perso touche le sol
                     this.player.setVelocityY(240); //alors vitesse verticale négative
                     //(on saute)
+                    }
+                    else{ // sinon
+                        this.player.setVelocityY(0); //vitesse nulle
                     }
                 }
                 collectStar(player, star){
@@ -313,7 +317,6 @@
                     }
                     else{ // sinon
                         this.player.setVelocityX(0); //vitesse nulle
-                        this.player.setVelocityY(0); //vitesse nulle
                         this.player.anims.play('turn'); //animation fait face caméra
                     }
                     if (this.clavier.Z.isDown){
@@ -325,6 +328,9 @@
                     //si touche haut appuyée ET que le perso touche le sol
                     this.player.setVelocityY(240); //alors vitesse verticale négative
                     //(on saute)
+                    }
+                    else{ // sinon
+                        this.player.setVelocityY(0); //vitesse nulle
                     }
                 }
             };
