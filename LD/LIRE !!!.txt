@@ -1,0 +1,3 @@
+Respawn des monstres :
+Oui si l'endroit n'a pas été vidé de ses monstres --> pas obtenu le fragment de puissance débloquant une capacité
+Sinon l'endroit redevient vivable 
