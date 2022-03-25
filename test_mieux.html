@@ -87,13 +87,34 @@
                     }
                     if (this.clavier.Z.isDown){
                     //si touche haut appuyée ET que le perso touche le sol
-                    this.player.setVelocityY(-240); //alors vitesse verticale négative
-                    //(on saute)
+                        if (this.clavier.Q.isDown) {
+                            this.player.setVelocityX(-160); //alors vitesse négative en X
+                            this.player.setVelocityY(-160); //alors vitesse verticale négative
+                            this.player.anims.play('left', true); //et animation => gauche
+                        }
+                        else if (this.clavier.D.isDown) {
+                            this.player.setVelocityX(160); //alors vitesse négative en X
+                            this.player.setVelocityY(-160); //alors vitesse verticale négative
+                            this.player.anims.play('right', true); //et animation => gauche
+                        }
+                        else{
+                            this.player.setVelocityY(-240); //alors vitesse verticale négative
+                        }
                     }
                     else if (this.clavier.S.isDown){
-                    //si touche haut appuyée ET que le perso touche le sol
-                    this.player.setVelocityY(240); //alors vitesse verticale négative
-                    //(on saute)
+                        if (this.clavier.Q.isDown) {
+                            this.player.setVelocityX(-160); //alors vitesse négative en X
+                            this.player.setVelocityY(160); //alors vitesse verticale négative
+                            this.player.anims.play('left', true); //et animation => gauche
+                        }
+                        else if (this.clavier.D.isDown) {
+                            this.player.setVelocityX(160); //alors vitesse négative en X
+                            this.player.setVelocityY(160); //alors vitesse verticale négative
+                            this.player.anims.play('right', true); //et animation => gauche
+                        }
+                        else{
+                            this.player.setVelocityY(240); //alors vitesse verticale négative
+                        }
                     }
                     else{ // sinon
                         this.player.setVelocityY(0); //vitesse nulle
