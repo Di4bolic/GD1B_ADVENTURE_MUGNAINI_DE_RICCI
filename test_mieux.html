@@ -17,7 +17,7 @@
                     this.load.image('ground', 'assets/platform.png');
                     this.load.image('star', 'assets/star.png');
                     this.load.image('bomb', 'assets/bomb.png');
-                    this.load.spritesheet('perso','assets/perso_bis.png',
+                    this.load.spritesheet('perso','assets/perso_sprite_sheet.png',
                     { frameWidth: 64, frameHeight: 64 });
                 }
                 create(){
@@ -32,23 +32,20 @@
                     this.player = this.physics.add.sprite(100, 450, 'perso');
                     this.player.setCollideWorldBounds(true);
                     this.physics.add.collider(this.player, this.platforms);
-                    /*this.anims.create({
+
+                    this.anims.create({
                     key: 'left',
-                    frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
+                    frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
                     frameRate: 10,
                     repeat: -1
                     });
-                    this.anims.create({
-                    key: 'turn',
-                    frames: [ { key: 'perso', frame: 4 } ],
-                    frameRate: 20
-                    });
+
                     this.anims.create({
                     key: 'right',
-                    frames: this.anims.generateFrameNumbers('perso', {start:5,end:8}),
+                    frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
                     frameRate: 10,
                     repeat: -1
-                    });*/
+                    });
 
                     this.anims.create({
                     key: 'front',
@@ -56,6 +53,14 @@
                     frameRate: 10,
                     repeat: -1
                     });
+
+                    this.anims.create({
+                    key: 'back',
+                    frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+
                     this.anims.create({
                     key: 'turn',
                     frames: [ { key: 'perso', frame: 0 } ],
@@ -92,53 +97,70 @@
                 }
                 update(){
                     if (this.gameOver){return;}
-                    if (this.clavier.Q.isDown){ //si la touche gauche est appuyée
-                        this.player.setVelocityX(-240); //alors vitesse négative en X
-                        //this.player.anims.play('left', true); //et animation => gauche
-                    }
-                    else if (this.clavier.D.isDown){ //sinon si la touche droite est appuyée
-                        this.player.setVelocityX(240); //alors vitesse positive en X
-                        //this.player.anims.play('right', true); //et animation => droite
-                    }
-                    else{ // sinon
-                        this.player.setVelocityX(0); //vitesse nulle
-                        //this.player.anims.play('turn'); //animation fait face caméra
-                    }
-                    if (this.clavier.Z.isDown){
-                    //si touche haut appuyée ET que le perso touche le sol
+                    if (this.clavier.Z.isDown) {                        
                         if (this.clavier.Q.isDown) {
-                            this.player.setVelocityX(-160); //alors vitesse négative en X
-                            this.player.setVelocityY(-160); //alors vitesse verticale négative
-                            //this.player.anims.play('left', true); //et animation => gauche
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
                         }
                         else if (this.clavier.D.isDown) {
-                            this.player.setVelocityX(160); //alors vitesse négative en X
-                            this.player.setVelocityY(-160); //alors vitesse verticale négative
-                            //this.player.anims.play('right', true); //et animation => gauche
-                        }
-                        else{
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(-160);
+                        } else {
                             this.player.setVelocityY(-240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative                            
+                            this.player.anims.play('back', true); //et animation => gauche
+                            this.scoreText.setText('back');
                         }
                     }
-                    else if (this.clavier.S.isDown){
+                    else if (this.clavier.S.isDown) {
                         if (this.clavier.Q.isDown) {
-                            this.player.setVelocityX(-160); //alors vitesse négative en X
-                            this.player.setVelocityY(160); //alors vitesse verticale négative
-                            //this.player.anims.play('left', true); //et animation => gauche
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
                         }
                         else if (this.clavier.D.isDown) {
-                            this.player.setVelocityX(160); //alors vitesse négative en X
-                            this.player.setVelocityY(160); //alors vitesse verticale négative
-                            //this.player.anims.play('right', true); //et animation => gauche
-                        }
-                        else{
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(160);
+                        } else {
                             this.player.setVelocityY(240); //alors vitesse verticale négative
-                            this.player.anims.play('front', true);
+                            this.player.setVelocityX(0); //alors vitesse verticale négative  
+                            this.player.anims.play('front', true); //et animation => gauche
+                            this.scoreText.setText('front');
                         }
                     }
-                    else{ // sinon
-                        this.player.setVelocityY(0); //vitesse nulle
-                        this.player.anims.play('turn');
+                    else if (this.clavier.Q.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(-240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('left', true); //et animation => gauche
+                            this.scoreText.setText('left');
+                        }
+                    }
+                    else if (this.clavier.D.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('right', true); //et animation => gauche
+                            this.scoreText.setText('right');
+                        }
+                    }
+                    else {
+                        this.player.setVelocityY(0);
+                        this.player.setVelocityX(0);
+                        this.player.anims.play('turn', true);
                     }
                 }
                 collectStar(player, star){
@@ -231,51 +253,71 @@
                     this.physics.add.collider(this.player, this.bombs, hitBomb, null, this);
                 }
                 update(){
-                    if (this.clavier.Q.isDown){ //si la touche gauche est appuyée
-                        this.player.setVelocityX(-240); //alors vitesse négative en X
-                        this.player.anims.play('left', true); //et animation => gauche
-                    }
-                    else if (this.clavier.D.isDown){ //sinon si la touche droite est appuyée
-                        this.player.setVelocityX(240); //alors vitesse positive en X
-                        this.player.anims.play('right', true); //et animation => droite
-                    }
-                    else{ // sinon
-                        this.player.setVelocityX(0); //vitesse nulle
-                        this.player.anims.play('turn'); //animation fait face caméra
-                    }
-                    if (this.clavier.Z.isDown){
-                    //si touche haut appuyée ET que le perso touche le sol
+                    if (this.gameOver){return;}
+                    if (this.clavier.Z.isDown) {                        
                         if (this.clavier.Q.isDown) {
-                            this.player.setVelocityX(-160); //alors vitesse négative en X
-                            this.player.setVelocityY(-160); //alors vitesse verticale négative
-                            this.player.anims.play('left', true); //et animation => gauche
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
                         }
                         else if (this.clavier.D.isDown) {
-                            this.player.setVelocityX(160); //alors vitesse négative en X
-                            this.player.setVelocityY(-160); //alors vitesse verticale négative
-                            this.player.anims.play('right', true); //et animation => gauche
-                        }
-                        else{
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(-160);
+                        } else {
                             this.player.setVelocityY(-240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative                            
+                            this.player.anims.play('back', true); //et animation => gauche
+                            this.scoreText.setText('back');
                         }
                     }
-                    else if (this.clavier.S.isDown){
+                    else if (this.clavier.S.isDown) {
                         if (this.clavier.Q.isDown) {
-                            this.player.setVelocityX(-160); //alors vitesse négative en X
-                            this.player.setVelocityY(160); //alors vitesse verticale négative
-                            this.player.anims.play('left', true); //et animation => gauche
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
                         }
                         else if (this.clavier.D.isDown) {
-                            this.player.setVelocityX(160); //alors vitesse négative en X
-                            this.player.setVelocityY(160); //alors vitesse verticale négative
-                            this.player.anims.play('right', true); //et animation => gauche
-                        }
-                        else{
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(160);
+                        } else {
                             this.player.setVelocityY(240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative  
+                            this.player.anims.play('front', true); //et animation => gauche
+                            this.scoreText.setText('front');
                         }
                     }
-                    else{ // sinon
-                        this.player.setVelocityY(0); //vitesse nulle
+                    else if (this.clavier.Q.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(-240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('left', true); //et animation => gauche
+                            this.scoreText.setText('left');
+                        }
+                    }
+                    else if (this.clavier.D.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('right', true); //et animation => gauche
+                            this.scoreText.setText('right');
+                        }
+                    }
+                    else {
+                        this.player.setVelocityY(0);
+                        this.player.setVelocityX(0);
+                        this.player.anims.play('turn', true);
                     }
                 }
                 collectStar(player, star){
@@ -369,51 +411,70 @@
                 }
                 update(){
                     if (this.gameOver){return;}
-                    if (this.clavier.Q.isDown){ //si la touche gauche est appuyée
-                        this.player.setVelocityX(-240); //alors vitesse négative en X
-                        this.player.anims.play('left', true); //et animation => gauche
-                    }
-                    else if (this.clavier.D.isDown){ //sinon si la touche droite est appuyée
-                        this.player.setVelocityX(240); //alors vitesse positive en X
-                        this.player.anims.play('right', true); //et animation => droite
-                    }
-                    else{ // sinon
-                        this.player.setVelocityX(0); //vitesse nulle
-                        this.player.anims.play('turn'); //animation fait face caméra
-                    }
-                    if (this.clavier.Z.isDown){
-                    //si touche haut appuyée ET que le perso touche le sol
+                    if (this.clavier.Z.isDown) {                        
                         if (this.clavier.Q.isDown) {
-                            this.player.setVelocityX(-160); //alors vitesse négative en X
-                            this.player.setVelocityY(-160); //alors vitesse verticale négative
-                            this.player.anims.play('left', true); //et animation => gauche
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
                         }
                         else if (this.clavier.D.isDown) {
-                            this.player.setVelocityX(160); //alors vitesse négative en X
-                            this.player.setVelocityY(-160); //alors vitesse verticale négative
-                            this.player.anims.play('right', true); //et animation => gauche
-                        }
-                        else{
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(-160);
+                        } else {
                             this.player.setVelocityY(-240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative                            
+                            this.player.anims.play('back', true); //et animation => gauche
+                            this.scoreText.setText('back');
                         }
                     }
-                    else if (this.clavier.S.isDown){
+                    else if (this.clavier.S.isDown) {
                         if (this.clavier.Q.isDown) {
-                            this.player.setVelocityX(-160); //alors vitesse négative en X
-                            this.player.setVelocityY(160); //alors vitesse verticale négative
-                            this.player.anims.play('left', true); //et animation => gauche
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
                         }
                         else if (this.clavier.D.isDown) {
-                            this.player.setVelocityX(160); //alors vitesse négative en X
-                            this.player.setVelocityY(160); //alors vitesse verticale négative
-                            this.player.anims.play('right', true); //et animation => gauche
-                        }
-                        else{
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(160);
+                        } else {
                             this.player.setVelocityY(240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative  
+                            this.player.anims.play('front', true); //et animation => gauche
+                            this.scoreText.setText('front');
                         }
                     }
-                    else{ // sinon
-                        this.player.setVelocityY(0); //vitesse nulle
+                    else if (this.clavier.Q.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(-240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('left', true); //et animation => gauche
+                            this.scoreText.setText('left');
+                        }
+                    }
+                    else if (this.clavier.D.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('right', true); //et animation => gauche
+                            this.scoreText.setText('right');
+                        }
+                    }
+                    else {
+                        this.player.setVelocityY(0);
+                        this.player.setVelocityX(0);
+                        this.player.anims.play('turn', true);
                     }
                 }
             };
