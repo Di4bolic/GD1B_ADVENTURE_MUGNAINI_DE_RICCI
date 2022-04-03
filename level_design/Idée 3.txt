@@ -1,0 +1,9 @@
+Notre vie est notre essence vitale : symbolisé par un cercle remplit de vert
+-> le niveau de vert baisse si on se fait frapper
+-> remonte avec les perles de vie
+
+On a de l'argent : symbolisé par les perles obscures
+
+On a un inventaire qui peut contenir deux types d'objets différents : clés et/ou coeurs de monstres
+
+On a un inventaire de maîtrise qui contient les techniques apprises
