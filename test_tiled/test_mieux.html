@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" /><title>Mon 1er jeu Phaser</title>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+        <style type="text/css"> body { margin: 0; }</style>
+    </head>
+    <body>
+        <script type="text/javascript">
+
+            class scene1 extends Phaser.Scene{
+                constructor(){
+                    super("scene1");
+                }
+                preload(){
+                    this.load.image("tiles","tiles.png");
+                    this.load.tilemapTiledJSON("map","map1.json");
+                    // Vie -----------------------------------------------------------
+                    this.load.image("vie_0","assets/energie_vitale_0.png");
+                    this.load.image("vie_1","assets/energie_vitale_1.png");
+                    this.load.image("vie_2","assets/energie_vitale_2.png");
+                    this.load.image("vie_3","assets/energie_vitale_3.png");
+                    this.load.image("vie_4","assets/energie_vitale_4.png");
+                    this.load.image("vie_5","assets/energie_vitale_5.png");
+                    this.load.image("vie_6","assets/energie_vitale_6.png");
+                    this.load.image("vie_7","assets/energie_vitale_7.png");
+                    this.load.image("vie_8","assets/energie_vitale_8.png");
+                    this.load.image("vie_9","assets/energie_vitale_9.png");
+                    this.load.image("vie_10","assets/energie_vitale_10.png");
+                    // ---------------------------------------------------------------
+                    this.load.spritesheet('perso','assets/perso_sprite_sheet.png',
+                    { frameWidth: 64, frameHeight: 64 });
+                }
+                create(){
+                    const map = this.make.tilemap({key: "map", tileWidth: 32, tileHeight: 32});
+                    const tileset = map.addTilesetImage("tiles1","tiles");
+                    const layer1 = map.createLayer("sol", tileset, 0, 0);
+                    const layer4 = map.createLayer("derriere", tileset, 0, 0);
+                    const layer2 = map.createLayer("collisions", tileset, 0, 0);
+                    layer2.setCollisionByProperty({ estSolide: true });
+
+                    var posx = 3520;
+                    var posy = 5800;
+
+                    this.player = this.physics.add.sprite(posx, posy, 'perso').setSize(32, 42).setOffset(16, 21);
+                    this.player.setCollideWorldBounds(true);
+                    this.add.image(455,230, "vie").setScrollFactor(0);
+
+                    const layer3 = map.createLayer("devant", tileset, 0, 0)
+
+                    var vie = this.add.image(455,230, "vie_10").setScrollFactor(0);
+
+                    this.physics.add.collider(this.player, layer2);
+
+                    this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+
+                    this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+
+                    this.anims.create({
+                    key: 'front',
+                    frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+
+                    this.anims.create({
+                    key: 'back',
+                    frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+
+                    this.anims.create({
+                    key: 'turn',
+                    frames: this.anims.generateFrameNumbers('perso', {start:16,end:17}),
+                    frameRate: 5,
+                    repeat: -1
+                    });
+
+                    this.cursors = this.input.keyboard.createCursorKeys();
+                    this.clavier = this.input.keyboard.addKeys('Z,Q,S,D,SPACE,ENTER');
+
+                    this.cameras.main.setSize(1280, 720);
+                    this.cameras.main.startFollow(this.player);
+                    this.cameras.main.setBounds(0, 0, 7040, 6080);
+                    this.cameras.main.zoom = 2.3;
+
+                }
+                update(){
+                    if (this.clavier.Z.isDown) {                        
+                        if (this.clavier.Q.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.D.isDown) {
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(-160);
+                        } else {
+                            this.player.setVelocityY(-240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative                            
+                            this.player.anims.play('back', true); //et animation => gauche
+                        }
+                    }
+                    else if (this.clavier.S.isDown) {
+                        if (this.clavier.Q.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        }
+                        else if (this.clavier.D.isDown) {
+                            this.player.setVelocityX(160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityY(240); //alors vitesse verticale négative
+                            this.player.setVelocityX(0); //alors vitesse verticale négative  
+                            this.player.anims.play('front', true); //et animation => gauche
+                        }
+                    }
+                    else if (this.clavier.Q.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(-240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('left', true); //et animation => gauche
+                        }
+                    }
+                    else if (this.clavier.D.isDown) {                        
+                        if (this.clavier.Z.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(-160);
+                        }
+                        else if (this.clavier.S.isDown) {
+                            this.player.setVelocityX(-160);
+                            this.player.setVelocityY(160);
+                        } else {
+                            this.player.setVelocityX(240); //alors vitesse verticale négative
+                            this.player.setVelocityY(0); //alors vitesse verticale négative  
+                            this.player.anims.play('right', true); //et animation => gauche
+                        }
+                    }
+                    else {
+                        this.player.setVelocityY(0);
+                        this.player.setVelocityX(0);
+                        this.player.anims.play('turn', true);
+                    }
+                }
+            };
+
+            var config = {
+            type: Phaser.AUTO, // Si sur CANVAS , seTint ne fonctionne pas
+            width: 7040, height: 6080,
+            pixelArt: true,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                debug: true
+            }},
+
+            scene: [scene1],
+
+            };
+            new Phaser.Game(config);
+
+        </script>
+    </body>
+</html>
